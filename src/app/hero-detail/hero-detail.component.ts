@@ -23,6 +23,7 @@ export class HeroDetailComponent implements OnInit {
   }
 
   getHero(): void {
+    // ! at end of line to coerce Object is possibly 'null'.ts(2531)
     const id = +this.route.snapshot.paramMap.get('id')!;
     this.heroService.getHero(id)
       .subscribe(hero => this.hero = hero);
