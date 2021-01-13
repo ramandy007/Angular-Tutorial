@@ -12,6 +12,9 @@ import { HttpClientModule } from '@angular/common/http'
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
+import { StoreModule } from '@ngrx/store'
+
+import { reducer } from './state/message.reducer'
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +31,8 @@ import { HeroSearchComponent } from './hero-search/hero-search.component';
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
-    )
+    ),
+    StoreModule.forRoot({ messageList: reducer })
 
   ],
   providers: [],
