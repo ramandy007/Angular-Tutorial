@@ -7,7 +7,7 @@ import { addMessage, deleteAll } from "./state/message.actions"
   providedIn: 'root'
 })
 export class MessageService {
-  messages: any;
+  messages: string[] = [];
   messages$!: Observable<{ messages: string[] }>
   // add(message: string) {
   //   this.messages.push(message)

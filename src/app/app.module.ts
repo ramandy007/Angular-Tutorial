@@ -15,6 +15,7 @@ import { HeroSearchComponent } from './hero-search/hero-search.component';
 import { StoreModule } from '@ngrx/store'
 
 import { reducer } from './state/message.reducer'
+import { HeroReducer } from "./state/heroes.reducer"
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +33,7 @@ import { reducer } from './state/message.reducer'
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
     ),
-    StoreModule.forRoot({ messageList: reducer })
+    StoreModule.forRoot({ messageList: reducer, HeroList: HeroReducer })
 
   ],
   providers: [],
