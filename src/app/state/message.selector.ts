@@ -2,14 +2,14 @@ import { createSelector } from '@ngrx/store'
 
 
 
-export interface AppState {
-    messageList: string[]
+export interface Messages {
+    messages: string[];
 }
 
+export interface ApplicationState {
+    messageList: Messages;
+}
 
-export const showMessages = (state: AppState) => state.messageList
+export const showMessageList = (state: ApplicationState) => state.messageList
 
-export const selectMessages = createSelector(
-    showMessages,
-    (messageList: string[]) => { return messageList }
-);
+export const showMessagesSelector = createSelector(showMessageList, (messageList: Messages) => messageList.messages);
