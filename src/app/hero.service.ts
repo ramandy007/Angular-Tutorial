@@ -5,8 +5,9 @@ import { Observable, of } from 'rxjs'
 import { MessageService } from "./message.service"
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-
-
+import { Store } from '@ngrx/store';
+import { herosFromApi } from "./state/heroes.effects"
+import { getHeroSelector } from "./state/heroes.selector"
 @Injectable({
   providedIn: 'root'
 })
@@ -23,10 +24,16 @@ export class HeroService {
   // }
   /** GET heroes from the server */
   getHeroes(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(this.heroesUrl).pipe(
-      tap(_ => this.log('fetched heroes')),
-      catchError(this.handleError<Hero[]>('getHeroes', []))
-    );
+    // return this.http.get<Hero[]>(this.heroesUrl).pipe(
+    //   tap(_ => this.log('fetched heroes')),
+    //   catchError(this.handleError<Hero[]>('getHeroes', []))
+    // );
+
+    this.store.dispatch(herosFromApi())
+
+
+    //I had to do this because ,rest of the code expects a Hero[] to be returned by getHeroes
+    return this.store.select(getHeroSelector)
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
@@ -62,7 +69,7 @@ export class HeroService {
   private log(message: string) {
     this.messageService.add(`HeroService: ${message}`);
   }
-  constructor(private messageService: MessageService, private http: HttpClient) { }
+  constructor(private messageService: MessageService, private http: HttpClient, private store: Store<{ heroes: { heroes: Hero[] } }>) { }
 
   /** POST: add a new hero to the server */
   addHero(hero: Hero): Observable<Hero> {

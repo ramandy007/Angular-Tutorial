@@ -16,6 +16,13 @@ import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { reducer } from './state/message.reducer'
+import { heroesFeatureKey } from './state/heros.reducer'
+import * as HerosReducer from './state/heros.reducer'
+
+import { EffectsModule } from '@ngrx/effects';
+import { HeroesEffects } from './state/heroes.effects'
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,9 +41,11 @@ import { reducer } from './state/message.reducer'
       InMemoryDataService, { dataEncapsulation: false }
     ),
     StoreModule.forRoot({ messageList: reducer }),
+    StoreModule.forFeature(heroesFeatureKey, HerosReducer.reducer),
     StoreDevtoolsModule.instrument({
       maxAge: 10
-    })
+    }),
+    EffectsModule.forRoot([HeroesEffects])
 
   ],
   providers: [],
